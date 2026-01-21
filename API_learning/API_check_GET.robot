@@ -8,12 +8,12 @@ Library    ../Python_learning/API_check_GET.py
 *** Variables ***
 ${base_url}     http://restapi.demoqa.com/customer
 ${goRest_GET_Base_url}    https://gorest.co.in/public/v2
-${TOKEN}    e34c88915b3798a2639ec4add7d15379246aa83fdc9a9427407f11cff82ab86a
+${TOKEN}    60e1e3fcdcba9c9bcee643c937739234340597d69b3963a70d30395c2566b416
 
 *** Test Cases ***
 Get Details
     create session  mysession   ${base_url}
-    ${body}=    create dictionary   FirstName=Sonal  LastName=Saini
+    ${body}=    Create dictionary   FirstName=Sonal  LastName=Saini
     ${header}=      create disctionary  Content-Type=application/json
     ${response}=     post request  mysession /register   data=${body}    header=${header}
     log to console  ${response.Content}
@@ -33,3 +33,12 @@ Get user details from the gotest website using python file
     [Tags]        GET_API_1
     ${output}=    Get Users List
     Log to console     "\n The list of users are being listed"
+
+Create a new user from the gotest website
+    [Documentation]    Performing the POST action on the API endpoint including a token and Payload
+    [Tags]    POST_API
+    ${headers}=    Create Dictionary    Authorization    Bearer ${TOKEN}    Content-Type    application/json
+    ${payload}=    Create Dictionary    id=6809950    name=tempat    email=tempat@blanda.test    gender=female    status=active
+    ${response}=    POST    ${goRest_GET_Base_url}/users    headers=${headers}
+    Should Be Equal As Strings    ${response.status_code}    201    # Ensure the response status code is as expected
+    Log    ${response.content}    # Log the response content

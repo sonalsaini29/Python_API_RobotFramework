@@ -2,7 +2,7 @@ import requests
 import json
 
 Base_Uri = "https://gorest.co.in/"
-auth_token = "e34c88915b3798a2639ec4add7d15379246aa83fdc9a9427407f11cff82ab86a"
+auth_token = "60e1e3fcdcba9c9bcee643c937739234340597d69b3963a70d30395c2566b416"
 
 
 def get_users_list():
@@ -23,3 +23,10 @@ def get_users_list():
         print(f"Error: {e}")
 
 # POST Users
+def post_create_user():
+    try:
+        url= Base_Uri + "public/v2/users"
+        print ("url" + url)
+        header ={"Authorization" : auth_token}
+    except Exception as e:
+        print(f"Error:{e}")
